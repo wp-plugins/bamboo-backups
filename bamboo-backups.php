@@ -28,14 +28,9 @@
 		update_option( "bamboo_backups_history", $bamboo_backups_history );
 	}
 
-	// Hook into the shutdown event
-	add_action( 'shutdown',   'bamboo_backups_shutdown' );
-
-	// Hook into the admin menu event
-	add_action( 'admin_menu', 'bamboo_backups_admin_menu' );
-
 /**********************************************************************************************************************/
 
+	// Hook into the shutdown event
 	function bamboo_backups_shutdown() {
 
 		// THIS FUNCTION IS CALLED ON EVERY PAGE VIEW SO KEEP IT LIGHT
@@ -68,15 +63,18 @@
 		}
 
 	}
+	add_action( 'shutdown',   'bamboo_backups_shutdown' );
 
 /**********************************************************************************************************************/
 
+	// Hook into the admin menu event
 	function bamboo_backups_admin_menu() {
 
 		// Add the management page to the tools admin menu
 		add_management_page( 'Bamboo Backups', 'Bamboo Backups', 'manage_options', 'bamboo-backups', 'bamboo_backups_page' );
 
 	}
+	add_action( 'admin_menu', 'bamboo_backups_admin_menu' );
 
 /**********************************************************************************************************************/
 
