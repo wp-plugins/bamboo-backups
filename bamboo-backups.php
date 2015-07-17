@@ -305,7 +305,7 @@
 		$count = sizeof( $backups );
 	    if( $count > $bamboo_backups_history ) {
 			sort( $backups );
-			for( $i = 1; $i <= $count-$history; $i++ ) {
+			for( $i = 1; $i <= $count-$bamboo_backups_history; $i++ ) {
 				$file = $path.'/'.$backups[$i-1];
 				unlink( $file.".zip" );
 			}
