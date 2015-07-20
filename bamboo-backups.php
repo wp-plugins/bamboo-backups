@@ -5,7 +5,7 @@
 	Plugin URI:  http://www.bamboosolutions.co.uk/wordpress/bamboo-backups
 	Author:      Bamboo Solutions
 	Author URI:  http://www.bamboosolutions.co.uk
-	Version:     1.0
+	Version:     1.1
 	Description: Automatically create backups of your WordPress database
 */
 /**********************************************************************************************************************/
@@ -203,6 +203,9 @@
 
 	function bamboo_backups_exec() {
 
+		// Establish a reference to the WordPress database
+		global $wpdb;
+
 		// Establish how many backups to keep
 		global $bamboo_backups_history;
 
@@ -260,12 +263,14 @@
 	    }
 
 		// Construct the SQL dump command
-		if( file_exists("/usr/local/mysql/bin/") ) {
-			$command = "/usr/local/mysql/bin/";
+		if( file_exists("/usr/local/mysql/bin/mysqldump") ) {
+			$command = "/usr/local/mysql/bin/mysqldump";
+		} elseif ( file_exists( "/Applications/MAMP/Library/bin/mysqldump" ) ) {
+			$command = "/Applications/MAMP/Library/bin/mysqldump";
 		} else {
-			$command = "/usr/bin/";
+			$command = "/usr/bin/mysqldump";
 		}
-		$command.= "mysqldump --opt --skip-comments --skip-dump-date --host=$db_host --user=$db_user --password=$db_password $db_name > $filename.sql";
+		$command.= " --opt --skip-comments --skip-dump-date --host=$db_host --user=$db_user --password=$db_password $db_name > $filename.sql";
 
 		// Execute the SQL dump command
 		exec( $command );
@@ -305,7 +310,7 @@
 		$count = sizeof( $backups );
 	    if( $count > $bamboo_backups_history ) {
 			sort( $backups );
-			for( $i = 1; $i <= $count-$history; $i++ ) {
+			for( $i = 1; $i <= $count-$bamboo_backups_history; $i++ ) {
 				$file = $path.'/'.$backups[$i-1];
 				unlink( $file.".zip" );
 			}
