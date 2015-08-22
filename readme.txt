@@ -1,5 +1,5 @@
 === Bamboo Backups ===
-Contributors: BambooSolutions
+Contributors: bamboosolutions
 Donate link: http://www.bamboosolutions.co.uk
 Tags: backups, database
 Requires at least: 3.0.1
