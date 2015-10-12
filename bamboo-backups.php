@@ -270,7 +270,7 @@
 		} else {
 			$command = "/usr/bin/mysqldump";
 		}
-		$command.= " --opt --skip-comments --skip-dump-date --host=$db_host --user=$db_user --password=$db_password $db_name > $filename.sql";
+		$command.= " --opt --skip-comments --skip-dump-date --host=$db_host --user=$db_user --password=\"$db_password\" $db_name > $filename.sql";
 
 		// Execute the SQL dump command
 		exec( $command );
